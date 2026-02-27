@@ -312,7 +312,7 @@
   "@optionsAutoSkipUnavailableTracks": {
     "description": "Toggle to skip to the next queue track when current track stream resolution fails"
   },
-  "optionsAutoSkipUnavailableTracksSubtitleOn": "Automatically skip to the next queue track when a stream cannot be resolved.",
+  "optionsAutoSkipUnavailableTracksSubtitleOn": "Automatisch zum nächsten Queue-Track springen, wenn ein Stream nicht aufgebaut werden kann.",
   "@optionsAutoSkipUnavailableTracksSubtitleOn": {
     "description": "Subtitle when auto skip on resolve failure is enabled"
   },
@@ -320,7 +320,7 @@
   "@optionsAutoSkipUnavailableTracksSubtitleOff": {
     "description": "Subtitle when auto skip on resolve failure is disabled"
   },
-  "optionsInteractionMode": "Interaction Mode",
+  "optionsInteractionMode": "Interaktionsmodus",
   "@optionsInteractionMode": {
     "description": "Tap behavior mode for track lists"
   },
@@ -2172,7 +2172,7 @@
   "@trackLyricsNotAvailable": {
     "description": "Message when lyrics not found"
   },
-  "trackLyricsTimeout": "Anfrage Timeout. Versuchen Sie es später erneut.",
+  "trackLyricsTimeout": "Anfrage Timeout. Versuche es später erneut.",
   "@trackLyricsTimeout": {
     "description": "Message when lyrics request times out"
   },
@@ -2447,7 +2447,7 @@
   "@extensionsNoDownloadProvider": {
     "description": "Empty state - no download providers"
   },
-  "extensionsMetadataPriority": "Metadata Priority",
+  "extensionsMetadataPriority": "Metadaten Priorität",
   "@extensionsMetadataPriority": {
     "description": "Setting - metadata provider order"
   },
@@ -2794,11 +2794,11 @@
   "@queueEmptySubtitle": {
     "description": "Empty queue state subtitle"
   },
-  "queueClearCompleted": "Clear completed",
+  "queueClearCompleted": "Löschung Erledigt",
   "@queueClearCompleted": {
     "description": "Button - clear finished downloads"
   },
-  "queueDownloadFailed": "Download Failed",
+  "queueDownloadFailed": "Download fehlgeschlagen",
   "@queueDownloadFailed": {
     "description": "Error dialog title"
   },
@@ -2858,7 +2858,7 @@
   "@albumFolderArtistAlbumSinglesSubtitle": {
     "description": "Folder structure example"
   },
-  "downloadedAlbumDeleteSelected": "Delete Selected",
+  "downloadedAlbumDeleteSelected": "Ausgewählte löschen",
   "@downloadedAlbumDeleteSelected": {
     "description": "Button - delete selected tracks"
   },
@@ -2884,7 +2884,7 @@
       }
     }
   },
-  "downloadedAlbumSelectedCount": "{count} selected",
+  "downloadedAlbumSelectedCount": "{count} ausgewählt",
   "@downloadedAlbumSelectedCount": {
     "description": "Selection count indicator",
     "placeholders": {
@@ -2924,7 +2924,7 @@
       }
     }
   },
-  "utilityFunctions": "Utility Functions",
+  "utilityFunctions": "Hilfsfunktionen",
   "@utilityFunctions": {
     "description": "Extension capability - utility functions"
   },
@@ -2962,7 +2962,7 @@
       }
     }
   },
-  "errorGeneric": "Error: {message}",
+  "errorGeneric": "Fehler: {message}",
   "@errorGeneric": {
     "description": "Generic error message format",
     "placeholders": {
@@ -2976,7 +2976,7 @@
   "@discographyDownload": {
     "description": "Button - download artist discography"
   },
-  "discographyPlay": "Play Discography",
+  "discographyPlay": "Diskographie abspielen",
   "@discographyPlay": {
     "description": "Button - play artist discography"
   },
@@ -3032,7 +3032,7 @@
       }
     }
   },
-  "discographySelectAlbums": "Select Albums...",
+  "discographySelectAlbums": "Alben auswählen...",
   "@discographySelectAlbums": {
     "description": "Option - manually select albums to download"
   },
@@ -3056,7 +3056,7 @@
       }
     }
   },
-  "discographySelectedCount": "{count} selected",
+  "discographySelectedCount": "{count} ausgewählt",
   "@discographySelectedCount": {
     "description": "Selection count badge",
     "placeholders": {
@@ -3065,7 +3065,7 @@
       }
     }
   },
-  "discographyDownloadSelected": "Download Selected",
+  "discographyDownloadSelected": "Auswahl herunterladen",
   "@discographyDownloadSelected": {
     "description": "Button - download selected albums"
   },
@@ -3106,7 +3106,7 @@
   "@sectionStorageAccess": {
     "description": "Section header for storage access settings"
   },
-  "allFilesAccess": "All Files Access",
+  "allFilesAccess": "Zugriff auf alle Dateien",
   "@allFilesAccess": {
     "description": "Toggle for MANAGE_EXTERNAL_STORAGE permission"
   },
@@ -3138,7 +3138,7 @@
   "@settingsLocalLibrarySubtitle": {
     "description": "Subtitle for local library settings"
   },
-  "settingsCache": "Storage & Cache",
+  "settingsCache": "Speicher & Cache",
   "@settingsCache": {
     "description": "Settings menu item - cache management"
   },
@@ -3290,7 +3290,7 @@
       }
     }
   },
-  "libraryCleared": "Library cleared",
+  "libraryCleared": "Bibliothek geleert",
   "@libraryCleared": {
     "description": "Snackbar after clearing library"
   },
@@ -3490,7 +3490,7 @@
   "@storageSafStorage": {
     "description": "Label for SAF storage mode"
   },
-  "storageModeBadge": "Storage: {mode}",
+  "storageModeBadge": "Speicher: {mode}",
   "@storageModeBadge": {
     "description": "Badge showing storage mode for a track",
     "placeholders": {
@@ -3577,7 +3577,7 @@
   "@tutorialDownloadTip1": {
     "description": "Tutorial download tip 1"
   },
-  "tutorialDownloadTip2": "Wählen Sie Ihre bevorzugte Qualität (FLAC, Hi-Res oder MP3)",
+  "tutorialDownloadTip2": "Wähle deine bevorzugte Qualität (FLAC, Hi-Res oder MP3)",
   "@tutorialDownloadTip2": {
     "description": "Tutorial download tip 2"
   },
@@ -3653,7 +3653,7 @@
   "@tutorialExample": {
     "description": "Example label in tutorial"
   },
-  "libraryForceFullScan": "Force Full Scan",
+  "libraryForceFullScan": "Vollen Neu-Scan erzwingen",
   "@libraryForceFullScan": {
     "description": "Button to force a complete rescan of library"
   },
@@ -3682,7 +3682,7 @@
   "@cleanupOrphanedDownloadsNone": {
     "description": "Snackbar when no orphans found"
   },
-  "cacheTitle": "Storage & Cache",
+  "cacheTitle": "Speicher & Cache",
   "@cacheTitle": {
     "description": "Cache management page title"
   },
@@ -3788,7 +3788,7 @@
       }
     }
   },
-  "cacheEntries": "{count} entries",
+  "cacheEntries": "{count} Einträge",
   "@cacheEntries": {
     "description": "Track cache entry count",
     "placeholders": {
@@ -3819,7 +3819,7 @@
       }
     }
   },
-  "cacheClearAllConfirmTitle": "Clear all cache?",
+  "cacheClearAllConfirmTitle": "Gesamten Cache leeren?",
   "@cacheClearAllConfirmTitle": {
     "description": "Dialog title before clearing all caches"
   },
@@ -3827,7 +3827,7 @@
   "@cacheClearAllConfirmMessage": {
     "description": "Dialog message before clearing all caches"
   },
-  "cacheClearAll": "Clear all cache",
+  "cacheClearAll": "Gesamten Cache leeren",
   "@cacheClearAll": {
     "description": "Button label to clear all caches"
   },
@@ -3871,7 +3871,7 @@
   "@trackSaveLyricsSubtitle": {
     "description": "Subtitle for save lyrics action"
   },
-  "trackSaveLyricsProgress": "Saving lyrics...",
+  "trackSaveLyricsProgress": "Speichere Lyrics...",
   "@trackSaveLyricsProgress": {
     "description": "Snackbar while saving lyrics to file"
   },
@@ -3929,7 +3929,7 @@
   "@trackReEnrichFfmpegFailed": {
     "description": "Snackbar when FFmpeg embed fails for MP3/Opus"
   },
-  "trackSaveFailed": "Failed: {error}",
+  "trackSaveFailed": "Fehler: {error}",
   "@trackSaveFailed": {
     "description": "Snackbar when save operation fails",
     "placeholders": {
@@ -4018,15 +4018,15 @@
   "@collectionPlaylist": {
     "description": "Single playlist label"
   },
-  "collectionAddToPlaylist": "Add to playlist",
+  "collectionAddToPlaylist": "Zur Playlist hinzufügen",
   "@collectionAddToPlaylist": {
     "description": "Action to add a track to user playlist"
   },
-  "collectionCreatePlaylist": "Create playlist",
+  "collectionCreatePlaylist": "Playlist erstellen",
   "@collectionCreatePlaylist": {
     "description": "Action to create a new playlist"
   },
-  "collectionNoPlaylistsYet": "No playlists yet",
+  "collectionNoPlaylistsYet": "Noch keine Playlists",
   "@collectionNoPlaylistsYet": {
     "description": "Empty state title when user has no playlists"
   },
@@ -4073,11 +4073,11 @@
   "@collectionPlaylistNameRequired": {
     "description": "Validation error for empty playlist name"
   },
-  "collectionRenamePlaylist": "Rename playlist",
+  "collectionRenamePlaylist": "Playlist umbenennen",
   "@collectionRenamePlaylist": {
     "description": "Action to rename playlist"
   },
-  "collectionDeletePlaylist": "Delete playlist",
+  "collectionDeletePlaylist": "Playlist löschen",
   "@collectionDeletePlaylist": {
     "description": "Action to delete playlist"
   },
@@ -4090,11 +4090,11 @@
       }
     }
   },
-  "collectionPlaylistDeleted": "Playlist deleted",
+  "collectionPlaylistDeleted": "Playlist gelöscht",
   "@collectionPlaylistDeleted": {
     "description": "Snackbar after deleting playlist"
   },
-  "collectionPlaylistRenamed": "Playlist renamed",
+  "collectionPlaylistRenamed": "Playlist umbenannt",
   "@collectionPlaylistRenamed": {
     "description": "Snackbar after renaming playlist"
   },
@@ -4183,7 +4183,7 @@
   "@trackOptionRemoveFromLoved": {
     "description": "Bottom sheet action label - remove track from loved folder"
   },
-  "trackOptionAddToWishlist": "Add to Wishlist",
+  "trackOptionAddToWishlist": "Zur Wunschliste hinzufügen",
   "@trackOptionAddToWishlist": {
     "description": "Bottom sheet action label - add track to wishlist"
   },
@@ -4271,11 +4271,11 @@
       }
     }
   },
-  "setupModeSelectionTitle": "Choose Your Mode",
+  "setupModeSelectionTitle": "Modus wählen",
   "@setupModeSelectionTitle": {
     "description": "Title for mode selection step in setup wizard"
   },
-  "setupModeSelectionDescription": "How would you like to use SpotiFLAC? You can always change this later in Settings.",
+  "setupModeSelectionDescription": "Wie möchtest du SpotiFLAC verwenden? Sie können dies jederzeit in den Einstellungen ändern.",
   "@setupModeSelectionDescription": {
     "description": "Description for mode selection step"
   },
@@ -4283,7 +4283,7 @@
   "@setupModeDownloaderTitle": {
     "description": "Title for downloader mode option"
   },
-  "setupModeDownloaderFeature1": "Download tracks in lossless FLAC quality",
+  "setupModeDownloaderFeature1": "Titel in verlustfreier FLAC-Qualität herunterladen",
   "@setupModeDownloaderFeature1": {
     "description": "Downloader mode feature 1"
   },
@@ -4335,11 +4335,11 @@
   "@whatsNewWelcomeTitle": {
     "description": "Welcome page title in What's New screen"
   },
-  "whatsNewWelcomeDesc": "Welcome back! This is a major update packed with new features. Swipe through to see what's changed.",
+  "whatsNewWelcomeDesc": "Willkommen zurück! Dies ist ein großes Update mit neuen Features. Wische durch um zu sehen, was sich geändert hat.",
   "@whatsNewWelcomeDesc": {
     "description": "Welcome page description in What's New screen"
   },
-  "whatsNewWelcomeTip1": "New streaming mode with instant playback",
+  "whatsNewWelcomeTip1": "Neuer Streaming-Modus mit Sofortwiedergabe",
   "@whatsNewWelcomeTip1": {
     "description": "Welcome page tip 1"
   },
@@ -4355,7 +4355,7 @@
   "@whatsNewStreamingTitle": {
     "description": "What's New feature: Streaming Mode title"
   },
-  "whatsNewStreamingDesc": "Tap any track to play instantly — no download needed. Full-screen player with synced lyrics and media controls.",
+  "whatsNewStreamingDesc": "Tippe auf einen Titel, um sofort abzuspielen kein Download nötig. Vollbild-Player mit synchronisierten Songtexten und Mediensteuerungen.",
   "@whatsNewStreamingDesc": {
     "description": "What's New feature: Streaming Mode description"
   },
@@ -4363,7 +4363,7 @@
   "@whatsNewSmartQueueTitle": {
     "description": "What's New feature: Smart Queue title"
   },
-  "whatsNewSmartQueueDesc": "Your queue auto-curates with related tracks and artist discovery. Never run out of music.",
+  "whatsNewSmartQueueDesc": "Deine Warteschlange automatisch kuratiert mit verwandten Tracks und Künstlern Entdeckung. Nie geht die Musik aus.",
   "@whatsNewSmartQueueDesc": {
     "description": "What's New feature: Smart Queue description"
   },
@@ -4371,7 +4371,7 @@
   "@whatsNewDualModeTitle": {
     "description": "What's New feature: Dual Mode title"
   },
-  "whatsNewDualModeDesc": "Switch between Downloader and Streaming modes anytime. All buttons adapt automatically.",
+  "whatsNewDualModeDesc": "Wechsel jederzeit zwischen dem Downloader und dem Streaming-Modus. Alle Tasten passen sich automatisch an.",
   "@whatsNewDualModeDesc": {
     "description": "What's New feature: Dual Mode description"
   },
@@ -4379,7 +4379,7 @@
   "@whatsNewLibraryTitle": {
     "description": "What's New feature: Library redesign title"
   },
-  "whatsNewLibraryDesc": "Playlist-first layout with drag-and-drop categorization, custom covers, and multi-select batch actions.",
+  "whatsNewLibraryDesc": "Playlist-erstes Layout mit Drag-and-Drop Kategorisierung, benutzerdefinierten Covern und Mehrfachauswahl-Aktionen.",
   "@whatsNewLibraryDesc": {
     "description": "What's New feature: Library redesign description"
   },
@@ -4387,15 +4387,15 @@
   "@whatsNewPlayerTitle": {
     "description": "What's New feature: Full-Screen Player title"
   },
-  "whatsNewPlayerDesc": "Cover art parallax, synced lyrics, playback persistence across restarts, and download button in player.",
+  "whatsNewPlayerDesc": "Cover art parallax, synchronisierte Songtexte, Wiedergabe der Persistenz bei Neustarts und Download Button im Player.",
   "@whatsNewPlayerDesc": {
     "description": "What's New feature: Full-Screen Player description"
   },
-  "whatsNewContextMenuTitle": "Long-Press Menus",
+  "whatsNewContextMenuTitle": "Menü lange drücken",
   "@whatsNewContextMenuTitle": {
     "description": "What's New feature: Context Menus title"
   },
-  "whatsNewContextMenuDesc": "Long-press any track for quick actions — add to playlist, share, convert, or re-enrich metadata.",
+  "whatsNewContextMenuDesc": "Drücke lange auf einen Titel für schnelle Aktionen fügen Sie zu Wiedergabeliste, Teilen, Konvertieren oder erneuern Sie Metadaten hinzu.",
   "@whatsNewContextMenuDesc": {
     "description": "What's New feature: Context Menus description"
   },
@@ -4403,7 +4403,7 @@
   "@whatsNewPerformanceTitle": {
     "description": "What's New feature: Performance title"
   },
-  "whatsNewPerformanceDesc": "Faster startup, reduced memory usage, SQLite-backed persistence, and granular UI updates.",
+  "whatsNewPerformanceDesc": "Schnelleres Starten, reduzierte Speicherauslastung, SQLite-gestützte Dauerhaftigkeit und granulare UI-Updates.",
   "@whatsNewPerformanceDesc": {
     "description": "What's New feature: Performance description"
   },
@@ -4411,11 +4411,11 @@
   "@whatsNewBatchToolsTitle": {
     "description": "What's New feature: Batch Tools title"
   },
-  "whatsNewBatchToolsDesc": "Multi-select share, batch convert to MP3/Opus, and batch re-enrich metadata across your library.",
+  "whatsNewBatchToolsDesc": "Mehrfachauswahl-Freigabe, Batch-Konvertierung in MP3/Opus und Batch-Bereicherung von Metadaten in Ihrer gesamten Bibliothek.",
   "@whatsNewBatchToolsDesc": {
     "description": "What's New feature: Batch Tools description"
   },
-  "whatsNewStreamingTip1": "Tap any track to start playing instantly",
+  "whatsNewStreamingTip1": "Tippe auf irgendeinen Titel, um ihn sofort abzuspielen",
   "@whatsNewStreamingTip1": {
     "description": "What's New tip: streaming instant play"
   },
@@ -4423,7 +4423,7 @@
   "@whatsNewStreamingTip2": {
     "description": "What's New tip: streaming synced lyrics"
   },
-  "whatsNewStreamingTip3": "Download tracks directly from the player",
+  "whatsNewStreamingTip3": "Titel direkt vom Player herunterladen",
   "@whatsNewStreamingTip3": {
     "description": "What's New tip: streaming download from player"
   },
@@ -4463,7 +4463,7 @@
   "@whatsNewLibraryTip3": {
     "description": "What's New tip: library multi-select"
   },
-  "whatsNewPlayerTip1": "Cover art with parallax scrolling effect",
+  "whatsNewPlayerTip1": "Cover mit Parallaxen-Scrolling-Effekt",
   "@whatsNewPlayerTip1": {
     "description": "What's New tip: player parallax"
   },
