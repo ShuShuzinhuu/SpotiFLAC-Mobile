@@ -498,6 +498,29 @@ class HistoryDatabase {
     await db.update('history', values, where: 'id = ?', whereArgs: [id]);
   }
 
+  Future<void> updateAudioMetadata(
+    String id, {
+    String? newQuality,
+    int? newBitDepth,
+    int? newSampleRate,
+  }) async {
+    final db = await database;
+    final values = <String, dynamic>{};
+    if (newQuality != null) {
+      values['quality'] = newQuality;
+    }
+    if (newBitDepth != null) {
+      values['bit_depth'] = newBitDepth;
+    }
+    if (newSampleRate != null) {
+      values['sample_rate'] = newSampleRate;
+    }
+    if (values.isEmpty) {
+      return;
+    }
+    await db.update('history', values, where: 'id = ?', whereArgs: [id]);
+  }
+
   /// Get all file paths from download history
   /// Used to exclude downloaded files from local library scan
   Future<Set<String>> getAllFilePaths() async {

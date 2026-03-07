@@ -66,6 +66,7 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
   bool _isInstrumental = false; // Track if detected as instrumental
   bool _isConverting = false; // Track convert operation in progress
   bool _hasMetadataChanges = false;
+  bool _hasLoadedResolvedAudioMetadata = false;
   Map<String, dynamic>? _editedMetadata; // Overrides after metadata edit
   String? _embeddedCoverPreviewPath;
   final ScrollController _scrollController = ScrollController();
@@ -240,6 +241,12 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
     if (mounted && exists && _lyrics == null && !_lyricsLoading) {
       _fetchLyrics();
     }
+    if (mounted &&
+        exists &&
+        !_isLocalItem &&
+        !_hasLoadedResolvedAudioMetadata) {
+      unawaited(_refreshResolvedAudioMetadataFromFile());
+    }
     if (mounted && exists && !_hasPath(_embeddedCoverPreviewPath)) {
       final cachedPath = _getCachedEmbeddedCoverPreviewPathIfValid(
         _coverCacheKey,
@@ -272,6 +279,61 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
   Future<void> _cleanupTempFileAndParentIfNotCached(String? path) async {
     if (_isCacheTrackedPath(path)) return;
     await _cleanupTempFileAndParent(path);
+  }
+
+  Future<void> _refreshResolvedAudioMetadataFromFile() async {
+    if (_isLocalItem ||
+        _downloadItem == null ||
+        _hasLoadedResolvedAudioMetadata) {
+      return;
+    }
+
+    _hasLoadedResolvedAudioMetadata = true;
+
+    try {
+      final metadata = await PlatformBridge.readFileMetadata(cleanFilePath);
+      if (metadata['error'] != null) {
+        return;
+      }
+
+      final resolvedBitDepth = _readPositiveInt(metadata['bit_depth']);
+      final resolvedSampleRate = _readPositiveInt(metadata['sample_rate']);
+      final resolvedQuality = buildDisplayAudioQuality(
+        bitDepth: resolvedBitDepth ?? bitDepth,
+        sampleRate: resolvedSampleRate ?? sampleRate,
+        storedQuality: _quality,
+      );
+      final shouldPersistResolvedAudioMetadata =
+          resolvedBitDepth != null ||
+          resolvedSampleRate != null ||
+          (isPlaceholderQualityLabel(_quality) && resolvedQuality != null);
+
+      if ((resolvedBitDepth != null ||
+              resolvedSampleRate != null ||
+              isPlaceholderQualityLabel(_quality)) &&
+          mounted) {
+        setState(() {
+          _editedMetadata = {
+            ...?_editedMetadata,
+            if (resolvedBitDepth != null) 'bit_depth': resolvedBitDepth,
+            if (resolvedSampleRate != null) 'sample_rate': resolvedSampleRate,
+          };
+        });
+      }
+
+      if (shouldPersistResolvedAudioMetadata) {
+        await ref
+            .read(downloadHistoryProvider.notifier)
+            .updateAudioMetadataForItem(
+              id: _downloadItem!.id,
+              quality: resolvedQuality,
+              bitDepth: resolvedBitDepth,
+              sampleRate: resolvedSampleRate,
+            );
+      }
+    } catch (e) {
+      _log.w('Failed to resolve audio metadata from file: $e');
+    }
   }
 
   void _cleanupTempFileAndParentSync(String? path) {
@@ -426,9 +488,13 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
   int? get duration =>
       _isLocalItem ? _localLibraryItem!.duration : _downloadItem!.duration;
   int? get bitDepth =>
-      _isLocalItem ? _localLibraryItem!.bitDepth : _downloadItem!.bitDepth;
+      _readPositiveInt(_editedMetadata?['bit_depth']) ??
+      (_isLocalItem ? _localLibraryItem!.bitDepth : _downloadItem!.bitDepth);
   int? get sampleRate =>
-      _isLocalItem ? _localLibraryItem!.sampleRate : _downloadItem!.sampleRate;
+      _readPositiveInt(_editedMetadata?['sample_rate']) ??
+      (_isLocalItem
+          ? _localLibraryItem!.sampleRate
+          : _downloadItem!.sampleRate);
   int? get _localBitrate => _isLocalItem ? _localLibraryItem!.bitrate : null;
 
   String get _filePath =>
@@ -451,6 +517,32 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
   }
 
   String? get _quality => _isLocalItem ? null : _downloadItem!.quality;
+
+  int? _readPositiveInt(dynamic value) {
+    if (value == null) return null;
+    if (value is num) {
+      final asInt = value.toInt();
+      return asInt > 0 ? asInt : null;
+    }
+    final parsed = int.tryParse(value.toString());
+    if (parsed == null || parsed <= 0) return null;
+    return parsed;
+  }
+
+  String? get _displayAudioQuality {
+    final fileName = _extractFileNameFromPathOrUri(cleanFilePath);
+    final fileExt = fileName.contains('.')
+        ? fileName.split('.').last.toUpperCase()
+        : null;
+
+    return buildDisplayAudioQuality(
+      bitDepth: bitDepth,
+      sampleRate: sampleRate,
+      bitrateKbps: _isLocalItem ? _localBitrate : null,
+      format: _isLocalItem ? (_localLibraryItem!.format ?? fileExt) : fileExt,
+      storedQuality: _quality,
+    );
+  }
 
   String get cleanFilePath {
     final path = _filePath;
@@ -723,7 +815,8 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
                   spacing: 8,
                   runSpacing: 8,
                   children: [
-                    if (_quality != null && _quality!.isNotEmpty)
+                    if (_displayAudioQuality != null &&
+                        _displayAudioQuality!.isNotEmpty)
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
@@ -734,7 +827,7 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          _quality!,
+                          _displayAudioQuality!,
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -961,34 +1054,7 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
   }
 
   Widget _buildMetadataGrid(BuildContext context, ColorScheme colorScheme) {
-    // Determine audio quality string - prefer stored quality from download
-    String? audioQualityStr;
-    final fileName = _extractFileNameFromPathOrUri(cleanFilePath);
-    final fileExt = fileName.contains('.')
-        ? fileName.split('.').last.toUpperCase()
-        : '';
-
-    // Use stored quality from download history if available
-    if (_quality != null && _quality!.isNotEmpty) {
-      audioQualityStr = _quality;
-    } else if (_isLocalItem && _localBitrate != null && _localBitrate! > 0) {
-      // Lossy local file with bitrate info
-      final fmt = _localLibraryItem!.format?.toUpperCase() ?? fileExt;
-      audioQualityStr = '$fmt ${_localBitrate}kbps';
-    } else if (bitDepth != null && bitDepth! > 0 && sampleRate != null) {
-      // Lossless file with actual bit depth (FLAC, ALAC)
-      final sampleRateKHz = (sampleRate! / 1000).toStringAsFixed(1);
-      audioQualityStr = '$bitDepth-bit/${sampleRateKHz}kHz';
-    } else {
-      // Fallback based on file extension for legacy items
-      if (fileExt == 'MP3') {
-        audioQualityStr = 'MP3';
-      } else if (fileExt == 'OPUS' || fileExt == 'OGG') {
-        audioQualityStr = 'Opus';
-      } else if (fileExt == 'M4A' || fileExt == 'AAC') {
-        audioQualityStr = 'AAC';
-      }
-    }
+    final audioQualityStr = _displayAudioQuality;
 
     final items = <_MetadataItem>[
       _MetadataItem(context.l10n.trackTrackName, trackName),
@@ -1090,7 +1156,8 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
     final fileExtension = fileName.contains('.')
         ? fileName.split('.').last.toUpperCase()
         : 'Unknown';
-    final lossyBitrateLabel = _extractLossyBitrateLabel(_quality);
+    final resolvedQuality = _displayAudioQuality;
+    final lossyBitrateLabel = _extractLossyBitrateLabel(resolvedQuality);
 
     return Card(
       elevation: 0,
@@ -1220,7 +1287,11 @@ class _TrackMetadataScreenState extends ConsumerState<TrackMetadataScreen> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      '$bitDepth-bit/${(sampleRate! / 1000).toStringAsFixed(1)}kHz',
+                      buildDisplayAudioQuality(
+                            bitDepth: bitDepth,
+                            sampleRate: sampleRate,
+                          ) ??
+                          '',
                       style: TextStyle(
                         color: colorScheme.onTertiaryContainer,
                         fontWeight: FontWeight.w600,

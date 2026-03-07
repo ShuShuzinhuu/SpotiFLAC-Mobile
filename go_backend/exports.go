@@ -784,6 +784,7 @@ func CleanupConnections() {
 func ReadFileMetadata(filePath string) (string, error) {
 	lower := strings.ToLower(filePath)
 	isFlac := strings.HasSuffix(lower, ".flac")
+	isM4A := strings.HasSuffix(lower, ".m4a") || strings.HasSuffix(lower, ".aac")
 	isMp3 := strings.HasSuffix(lower, ".mp3")
 	isOgg := strings.HasSuffix(lower, ".opus") || strings.HasSuffix(lower, ".ogg")
 
@@ -832,6 +833,12 @@ func ReadFileMetadata(filePath string) (string, error) {
 			if quality.SampleRate > 0 && quality.TotalSamples > 0 {
 				result["duration"] = int(quality.TotalSamples / int64(quality.SampleRate))
 			}
+		}
+	} else if isM4A {
+		quality, qualityErr := GetM4AQuality(filePath)
+		if qualityErr == nil {
+			result["bit_depth"] = quality.BitDepth
+			result["sample_rate"] = quality.SampleRate
 		}
 	} else if isMp3 {
 		meta, err := ReadID3Tags(filePath)

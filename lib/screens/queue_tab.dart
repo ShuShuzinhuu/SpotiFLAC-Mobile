@@ -29,6 +29,7 @@ import 'package:spotiflac_android/screens/downloaded_album_screen.dart';
 import 'package:spotiflac_android/screens/library_tracks_folder_screen.dart';
 import 'package:spotiflac_android/screens/local_album_screen.dart';
 import 'package:spotiflac_android/utils/clickable_metadata.dart';
+import 'package:spotiflac_android/utils/string_utils.dart';
 
 enum LibraryItemSource { downloaded, local }
 
@@ -70,7 +71,11 @@ class UnifiedLibraryItem {
       albumName: item.albumName,
       coverUrl: item.coverUrl,
       filePath: item.filePath,
-      quality: item.quality,
+      quality: buildDisplayAudioQuality(
+        bitDepth: item.bitDepth,
+        sampleRate: item.sampleRate,
+        storedQuality: item.quality,
+      ),
       addedAt: item.downloadedAt,
       source: LibraryItemSource.downloaded,
       historyItem: item,
@@ -80,15 +85,18 @@ class UnifiedLibraryItem {
   factory UnifiedLibraryItem.fromLocalLibrary(LocalLibraryItem item) {
     String? quality;
     if (item.bitrate != null && item.bitrate! > 0) {
-      // Lossy format with bitrate
-      final fmt = item.format?.toUpperCase() ?? '';
-      quality = '$fmt ${item.bitrate}kbps'.trim();
+      quality = buildDisplayAudioQuality(
+        bitrateKbps: item.bitrate,
+        format: item.format,
+      );
     } else if (item.bitDepth != null &&
         item.bitDepth! > 0 &&
         item.sampleRate != null) {
       // Lossless format with actual bit depth
-      quality =
-          '${item.bitDepth}bit/${(item.sampleRate! / 1000).toStringAsFixed(1)}kHz';
+      quality = buildDisplayAudioQuality(
+        bitDepth: item.bitDepth,
+        sampleRate: item.sampleRate,
+      );
     }
     return UnifiedLibraryItem(
       id: 'local_${item.id}',
