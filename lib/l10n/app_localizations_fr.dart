@@ -358,7 +358,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aboutAppDescription =>
-      'Download Spotify tracks in lossless quality from Tidal and Qobuz.';
+      'Download Spotify tracks in lossless quality from Tidal, Qobuz, and Amazon Music.';
 
   @override
   String get artistAlbums => 'Albums';
@@ -689,6 +689,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get errorNoTracksFound => 'No tracks found';
+
+  @override
+  String get errorUrlNotRecognized => 'Link not recognized';
+
+  @override
+  String get errorUrlNotRecognizedMessage =>
+      'This link is not supported. Make sure the URL is correct and a compatible extension is installed.';
+
+  @override
+  String get errorUrlFetchFailed =>
+      'Failed to load content from this link. Please try again.';
 
   @override
   String errorMissingExtensionSource(String item) {
@@ -1811,7 +1822,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tutorialWelcomeTip2 =>
-      'Audio en qualité FLAC depuis Tidal, Qobuz ou Deezer';
+      'Get FLAC quality audio from Tidal, Qobuz, or Amazon Music';
 
   @override
   String get tutorialWelcomeTip3 =>

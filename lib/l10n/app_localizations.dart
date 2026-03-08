@@ -1306,6 +1306,24 @@ abstract class AppLocalizations {
   /// **'No tracks found'**
   String get errorNoTracksFound;
 
+  /// Error title - URL not handled by any extension or service
+  ///
+  /// In en, this message translates to:
+  /// **'Link not recognized'**
+  String get errorUrlNotRecognized;
+
+  /// Error message - URL not recognized explanation
+  ///
+  /// In en, this message translates to:
+  /// **'This link is not supported. Make sure the URL is correct and a compatible extension is installed.'**
+  String get errorUrlNotRecognizedMessage;
+
+  /// Error message - generic URL fetch failure
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load content from this link. Please try again.'**
+  String get errorUrlFetchFailed;
+
   /// Error - extension source not available
   ///
   /// In en, this message translates to:

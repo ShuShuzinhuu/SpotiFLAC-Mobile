@@ -728,7 +728,7 @@
   "@dialogDeleteSelectedTitle": {
     "description": "Dialog title - delete selected items"
   },
-  "dialogDeleteSelectedMessage": "Lösche {count} {count, plural, one {}=1{Track} other{Tracks}} aus dem Verlauf?\n\nDies löscht auch die Dateien aus dem Speicher.",
+  "dialogDeleteSelectedMessage": "Lösche {count} {count, plural, one {Track} other{Tracks}} aus dem Verlauf?\n\nDies löscht auch die Dateien aus dem Speicher.",
   "@dialogDeleteSelectedMessage": {
     "description": "Dialog message - delete selected tracks",
     "placeholders": {
@@ -807,7 +807,7 @@
   "@snackbarCredentialsCleared": {
     "description": "Snackbar - Spotify credentials removed"
   },
-  "snackbarDeletedTracks": "{count} {count, plural, one {}=1{Titel} other{Titel}}",
+  "snackbarDeletedTracks": "{count} {count, plural, one {Titel} other{Titel}}",
   "@snackbarDeletedTracks": {
     "description": "Snackbar - tracks deleted",
     "placeholders": {
@@ -1889,7 +1889,7 @@
   "@downloadedAlbumDeleteSelected": {
     "description": "Button - delete selected tracks"
   },
-  "downloadedAlbumDeleteMessage": "{count} {count, plural, one {}=1{Titel} other{Titel}} aus diesem Album löschen?\n\nDadurch werden auch die Dateien aus dem Speicher gelöscht.",
+  "downloadedAlbumDeleteMessage": "{count} {count, plural, one {Titel} other{Titel}} aus diesem Album löschen?\n\nDadurch werden auch die Dateien aus dem Speicher gelöscht.",
   "@downloadedAlbumDeleteMessage": {
     "description": "Delete confirmation with count",
     "placeholders": {
@@ -1915,7 +1915,7 @@
   "@downloadedAlbumTapToSelect": {
     "description": "Selection hint"
   },
-  "downloadedAlbumDeleteCount": "Lösche {count} {count, plural, one {}=1{Titel}other{Titel}}",
+  "downloadedAlbumDeleteCount": "Lösche {count} {count, plural, one {Titel} other{Titel}}",
   "@downloadedAlbumDeleteCount": {
     "description": "Delete button text with count",
     "placeholders": {
@@ -2353,7 +2353,7 @@
   "@timeJustNow": {
     "description": "Relative time - less than a minute ago"
   },
-  "timeMinutesAgo": "{count, plural, one {}=1{vor 1 Minute} other{vor {count} Minuten}}",
+  "timeMinutesAgo": "{count, plural, one {vor {count} Minute} other{vor {count} Minuten}}",
   "@timeMinutesAgo": {
     "description": "Relative time - minutes ago",
     "placeholders": {
@@ -2362,7 +2362,7 @@
       }
     }
   },
-  "timeHoursAgo": "{count, plural, one {}=1{vor 1 Stunde} other{vor {count} Stunden}}",
+  "timeHoursAgo": "{count, plural, one {vor {count} Stunde} other{vor {count} Stunden}}",
   "@timeHoursAgo": {
     "description": "Relative time - hours ago",
     "placeholders": {
@@ -3013,7 +3013,7 @@
   "@collectionPlaylistRemoveCover": {
     "description": "Bottom sheet action to remove custom cover image from a playlist"
   },
-  "selectionShareCount": "Teile {count} {count, plural, one {}=1{Titel}other{Titel}}",
+  "selectionShareCount": "Teile {count} {count, plural, one {Titel} other{Titel}}",
   "@selectionShareCount": {
     "description": "Share button text with count in selection mode",
     "placeholders": {
@@ -3026,7 +3026,7 @@
   "@selectionShareNoFiles": {
     "description": "Snackbar when no selected files exist on disk"
   },
-  "selectionConvertCount": "Konvertiere {count} {count, plural, one {}=1{Titel}other{Titel}}",
+  "selectionConvertCount": "Konvertiere {count} {count, plural, one {Titel} other{Titel}}",
   "@selectionConvertCount": {
     "description": "Convert button text with count in selection mode",
     "placeholders": {
@@ -3043,7 +3043,7 @@
   "@selectionBatchConvertConfirmTitle": {
     "description": "Confirmation dialog title for batch conversion"
   },
-  "selectionBatchConvertConfirmMessage": "Konvertiere {count} {format} {count, plural, one {}=1{Titel} other{Titel}} zu {bitrate}?\n\nOriginaldateien werden nach der Konvertierung gelöscht.",
+  "selectionBatchConvertConfirmMessage": "Konvertiere {count} {format} {count, plural, one {Titel} other{Titel}} zu {bitrate}?\n\nOriginaldateien werden nach der Konvertierung gelöscht.",
   "@selectionBatchConvertConfirmMessage": {
     "description": "Confirmation dialog message for batch conversion",
     "placeholders": {

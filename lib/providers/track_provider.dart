@@ -457,6 +457,19 @@ class TrackNotifier extends Notifier<TrackState> {
         return;
       }
 
+      // If URL doesn't match any known service, it's unrecognized
+      final isSpotifyUrl = url.contains('open.spotify.com') ||
+          url.contains('spotify.link') ||
+          url.startsWith('spotify:');
+      if (!isSpotifyUrl) {
+        state = TrackState(
+          isLoading: false,
+          error: 'url_not_recognized',
+          hasSearchText: state.hasSearchText,
+        );
+        return;
+      }
+
       final parsed = await PlatformBridge.parseSpotifyUrl(url);
       if (!_isRequestValid(requestId)) return;
 

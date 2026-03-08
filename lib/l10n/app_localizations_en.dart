@@ -689,6 +689,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorNoTracksFound => 'No tracks found';
 
   @override
+  String get errorUrlNotRecognized => 'Link not recognized';
+
+  @override
+  String get errorUrlNotRecognizedMessage =>
+      'This link is not supported. Make sure the URL is correct and a compatible extension is installed.';
+
+  @override
+  String get errorUrlFetchFailed =>
+      'Failed to load content from this link. Please try again.';
+
+  @override
   String errorMissingExtensionSource(String item) {
     return 'Cannot load $item: missing extension source';
   }

@@ -897,6 +897,18 @@
   "@errorNoTracksFound": {
     "description": "Error - search returned no results"
   },
+  "errorUrlNotRecognized": "Link tidak dikenali",
+  "@errorUrlNotRecognized": {
+    "description": "Error title - URL not handled by any extension or service"
+  },
+  "errorUrlNotRecognizedMessage": "Link ini tidak didukung. Pastikan URL benar dan ekstensi yang kompatibel sudah terpasang.",
+  "@errorUrlNotRecognizedMessage": {
+    "description": "Error message - URL not recognized explanation"
+  },
+  "errorUrlFetchFailed": "Gagal memuat konten dari link ini. Silakan coba lagi.",
+  "@errorUrlFetchFailed": {
+    "description": "Error message - generic URL fetch failure"
+  },
   "errorMissingExtensionSource": "Tidak dapat memuat {item}: sumber ekstensi tidak ada",
   "@errorMissingExtensionSource": {
     "description": "Error - extension source not available",

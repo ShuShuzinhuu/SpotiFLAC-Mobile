@@ -583,7 +583,25 @@ class _HomeTabState extends ConsumerState<HomeTab>
     if (url.isEmpty) return;
     if (url.startsWith('http') || url.startsWith('spotify:')) {
       await ref.read(trackProvider.notifier).fetchFromUrl(url);
-      _navigateToDetailIfNeeded();
+      final trackState = ref.read(trackProvider);
+      if (trackState.error != null && mounted) {
+        final l10n = context.l10n;
+        final errorMsg = trackState.error!;
+        final isRateLimit = errorMsg.contains('429') ||
+            errorMsg.toLowerCase().contains('rate limit') ||
+            errorMsg.toLowerCase().contains('too many requests');
+        final displayMessage = errorMsg == 'url_not_recognized'
+            ? l10n.errorUrlNotRecognizedMessage
+            : isRateLimit
+                ? l10n.errorRateLimitedMessage
+                : l10n.errorUrlFetchFailed;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(displayMessage)),
+        );
+        ref.read(trackProvider.notifier).clear();
+      } else {
+        _navigateToDetailIfNeeded();
+      }
     } else {
       final settings = ref.read(settingsProvider);
       await ref
@@ -1262,7 +1280,8 @@ class _HomeTabState extends ConsumerState<HomeTab>
                       (searchArtists != null && searchArtists.isNotEmpty) ||
                       (searchAlbums != null && searchAlbums.isNotEmpty) ||
                       (searchPlaylists != null && searchPlaylists.isNotEmpty) ||
-                      isLoading;
+                      isLoading ||
+                      error != null;
 
                   return SliverMainAxisGroup(
                     slivers: _buildSearchResults(
@@ -2224,10 +2243,13 @@ class _HomeTabState extends ConsumerState<HomeTab>
   }
 
   Widget _buildErrorWidget(String error, ColorScheme colorScheme) {
+    final l10n = context.l10n;
     final isRateLimit =
         error.contains('429') ||
         error.toLowerCase().contains('rate limit') ||
         error.toLowerCase().contains('too many requests');
+
+    final isUrlNotRecognized = error == 'url_not_recognized';
 
     if (isRateLimit) {
       return Card(
@@ -2245,7 +2267,7 @@ class _HomeTabState extends ConsumerState<HomeTab>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Rate Limited',
+                      l10n.errorRateLimited,
                       style: TextStyle(
                         color: colorScheme.onErrorContainer,
                         fontWeight: FontWeight.bold,
@@ -2253,9 +2275,48 @@ class _HomeTabState extends ConsumerState<HomeTab>
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Too many requests. Please wait a moment before searching again.',
+                      l10n.errorRateLimitedMessage,
                       style: TextStyle(
                         color: colorScheme.onErrorContainer,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    if (isUrlNotRecognized) {
+      return Card(
+        elevation: 0,
+        color: colorScheme.errorContainer.withValues(alpha: 0.5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Icon(Icons.link_off, color: colorScheme.error),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.errorUrlNotRecognized,
+                      style: TextStyle(
+                        color: colorScheme.error,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      l10n.errorUrlNotRecognizedMessage,
+                      style: TextStyle(
+                        color: colorScheme.error,
                         fontSize: 12,
                       ),
                     ),
@@ -2279,7 +2340,10 @@ class _HomeTabState extends ConsumerState<HomeTab>
             Icon(Icons.error_outline, color: colorScheme.error),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(error, style: TextStyle(color: colorScheme.error)),
+              child: Text(
+                l10n.errorUrlFetchFailed,
+                style: TextStyle(color: colorScheme.error),
+              ),
             ),
           ],
         ),
