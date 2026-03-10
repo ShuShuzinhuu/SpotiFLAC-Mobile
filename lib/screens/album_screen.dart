@@ -224,6 +224,8 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen> {
       trackNumber: data['track_number'] as int?,
       discNumber: data['disc_number'] as int?,
       releaseDate: data['release_date'] as String?,
+      albumType: data['album_type'] as String?,
+      totalTracks: data['total_tracks'] as int?,
     );
   }
 

@@ -816,6 +816,7 @@ class TrackNotifier extends Notifier<TrackState> {
         discNumber: track.discNumber,
         releaseDate: track.releaseDate,
         albumType: track.albumType,
+        totalTracks: track.totalTracks,
         source: track.source,
         availability: ServiceAvailability(
           tidal: availability['tidal'] as bool? ?? false,
@@ -897,6 +898,8 @@ class TrackNotifier extends Notifier<TrackState> {
       trackNumber: data['track_number'] as int?,
       discNumber: data['disc_number'] as int?,
       releaseDate: data['release_date'] as String?,
+      albumType: data['album_type'] as String?,
+      totalTracks: data['total_tracks'] as int?,
     );
   }
 
@@ -919,6 +922,7 @@ class TrackNotifier extends Notifier<TrackState> {
       trackNumber: data['track_number'] as int?,
       discNumber: data['disc_number'] as int?,
       releaseDate: data['release_date']?.toString(),
+      totalTracks: data['total_tracks'] as int?,
       source:
           source ??
           data['source']?.toString() ??

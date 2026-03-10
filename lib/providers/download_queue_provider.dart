@@ -2362,6 +2362,7 @@ class DownloadQueueNotifier extends Notifier<DownloadQueueState> {
       deezerId: baseTrack.deezerId,
       availability: baseTrack.availability,
       albumType: baseTrack.albumType,
+      totalTracks: baseTrack.totalTracks,
       source: baseTrack.source,
     );
   }
@@ -3274,6 +3275,8 @@ class DownloadQueueNotifier extends Notifier<DownloadQueueState> {
                 albumType:
                     (data['album_type'] as String?) ??
                     trackToDownload.albumType,
+                totalTracks:
+                    data['total_tracks'] as int? ?? trackToDownload.totalTracks,
                 source: trackToDownload.source,
               );
               _log.d(
@@ -3488,6 +3491,7 @@ class DownloadQueueNotifier extends Notifier<DownloadQueueState> {
                 deezerId: deezerTrackId,
                 availability: trackToDownload.availability,
                 albumType: trackToDownload.albumType,
+                totalTracks: trackToDownload.totalTracks,
                 source: trackToDownload.source,
               );
               _log.d(

@@ -294,7 +294,7 @@ class _ArtistScreenState extends ConsumerState<ArtistScreen> {
     }
   }
 
-  Track _parseTrack(Map<String, dynamic> data) {
+  Track _parseTrack(Map<String, dynamic> data, {ArtistAlbum? album}) {
     int durationMs = 0;
     final durationValue = data['duration_ms'];
     if (durationValue is int) {
@@ -307,18 +307,22 @@ class _ArtistScreenState extends ConsumerState<ArtistScreen> {
       id: (data['spotify_id'] ?? data['id'] ?? '').toString(),
       name: (data['name'] ?? '').toString(),
       artistName: (data['artists'] ?? data['artist'] ?? '').toString(),
-      albumName: (data['album_name'] ?? data['album'] ?? '').toString(),
-      albumArtist: data['album_artist']?.toString(),
+      albumName: (data['album_name'] ?? data['album'] ?? album?.name ?? '')
+          .toString(),
+      albumArtist: data['album_artist']?.toString() ?? widget.artistName,
       artistId:
           (data['artist_id'] ?? data['artistId'])?.toString() ??
           widget.artistId,
-      albumId: data['album_id']?.toString(),
-      coverUrl: (data['cover_url'] ?? data['images'])?.toString(),
+      albumId: data['album_id']?.toString() ?? album?.id,
+      coverUrl: (data['cover_url'] ?? data['images'] ?? album?.coverUrl)
+          ?.toString(),
       isrc: data['isrc']?.toString(),
       duration: (durationMs / 1000).round(),
       trackNumber: data['track_number'] as int?,
       discNumber: data['disc_number'] as int?,
       releaseDate: data['release_date']?.toString(),
+      albumType: data['album_type']?.toString() ?? album?.albumType,
+      totalTracks: data['total_tracks'] as int? ?? album?.totalTracks,
       source: data['provider_id']?.toString(),
     );
   }
@@ -669,7 +673,9 @@ class _ArtistScreenState extends ConsumerState<ArtistScreen> {
     List<ArtistAlbum> albums,
   ) {
     final albumsOnly = albums.where((a) => a.albumType == 'album').toList();
-    final singles = albums.where((a) => a.albumType == 'single').toList();
+    final singles = albums
+        .where((a) => a.albumType == 'single' || a.albumType == 'ep')
+        .toList();
 
     final totalTracks = albums.fold<int>(0, (sum, a) => sum + a.totalTracks);
     final albumTracks = albumsOnly.fold<int>(
@@ -940,7 +946,7 @@ class _ArtistScreenState extends ConsumerState<ArtistScreen> {
       if (result != null && result['tracks'] != null) {
         final tracksList = result['tracks'] as List<dynamic>;
         return tracksList
-            .map((t) => _parseTrack(t as Map<String, dynamic>))
+            .map((t) => _parseTrack(t as Map<String, dynamic>, album: album))
             .toList();
       }
     } else if (album.id.startsWith('deezer:')) {
@@ -961,7 +967,7 @@ class _ArtistScreenState extends ConsumerState<ArtistScreen> {
       if (result != null && result['tracks'] != null) {
         final tracksList = result['tracks'] as List<dynamic>;
         return tracksList
-            .map((t) => _parseTrack(t as Map<String, dynamic>))
+            .map((t) => _parseTrack(t as Map<String, dynamic>, album: album))
             .toList();
       }
 
@@ -970,7 +976,7 @@ class _ArtistScreenState extends ConsumerState<ArtistScreen> {
       if (metadata['tracks'] != null) {
         final tracksList = metadata['tracks'] as List<dynamic>;
         return tracksList
-            .map((t) => _parseTrack(t as Map<String, dynamic>))
+            .map((t) => _parseTrack(t as Map<String, dynamic>, album: album))
             .toList();
       }
     }
@@ -1004,6 +1010,7 @@ class _ArtistScreenState extends ConsumerState<ArtistScreen> {
       discNumber: data['disk_number'] as int? ?? data['disc_number'] as int?,
       releaseDate: album.releaseDate,
       albumType: album.albumType,
+      totalTracks: album.totalTracks,
     );
   }
 
