@@ -552,6 +552,14 @@ func ExtractLyrics(filePath string) (string, error) {
 		return extractLyricsFromSidecarLRC(filePath)
 	}
 
+	if strings.HasSuffix(lower, ".m4a") || strings.HasSuffix(lower, ".aac") {
+		lyrics, err := extractLyricsFromM4A(filePath)
+		if err == nil && strings.TrimSpace(lyrics) != "" {
+			return lyrics, nil
+		}
+		return extractLyricsFromSidecarLRC(filePath)
+	}
+
 	if strings.HasSuffix(lower, ".mp3") {
 		meta, err := ReadID3Tags(filePath)
 		if err == nil && meta != nil {
@@ -579,6 +587,80 @@ func ExtractLyrics(filePath string) (string, error) {
 	}
 
 	return extractLyricsFromSidecarLRC(filePath)
+}
+
+func extractLyricsFromM4A(filePath string) (string, error) {
+	f, err := os.Open(filePath)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+
+	fi, err := f.Stat()
+	if err != nil {
+		return "", err
+	}
+	fileSize := fi.Size()
+
+	moov, found, err := findAtomInRange(f, 0, fileSize, "moov", fileSize)
+	if err != nil || !found {
+		return "", fmt.Errorf("moov not found")
+	}
+
+	bodyStart := moov.offset + moov.headerSize
+	bodySize := moov.size - moov.headerSize
+
+	udta, found, err := findAtomInRange(f, bodyStart, bodySize, "udta", fileSize)
+	if err != nil || !found {
+		return "", fmt.Errorf("udta not found")
+	}
+
+	bodyStart = udta.offset + udta.headerSize
+	bodySize = udta.size - udta.headerSize
+
+	meta, found, err := findAtomInRange(f, bodyStart, bodySize, "meta", fileSize)
+	if err != nil || !found {
+		return "", fmt.Errorf("meta not found")
+	}
+
+	// meta atom has 4-byte version/flags after the header
+	bodyStart = meta.offset + meta.headerSize + 4
+	bodySize = meta.size - meta.headerSize - 4
+
+	ilst, found, err := findAtomInRange(f, bodyStart, bodySize, "ilst", fileSize)
+	if err != nil || !found {
+		return "", fmt.Errorf("ilst not found")
+	}
+
+	bodyStart = ilst.offset + ilst.headerSize
+	bodySize = ilst.size - ilst.headerSize
+
+	lyr, found, err := findAtomInRange(f, bodyStart, bodySize, "\xa9lyr", fileSize)
+	if err != nil || !found {
+		return "", fmt.Errorf("lyrics atom not found")
+	}
+
+	dataStart := lyr.offset + lyr.headerSize
+	dataSize := lyr.size - lyr.headerSize
+
+	dataAtom, found, err := findAtomInRange(f, dataStart, dataSize, "data", fileSize)
+	if err != nil || !found {
+		return "", fmt.Errorf("data atom not found in lyrics")
+	}
+
+	// data atom: 8 bytes header + 4 bytes type indicator + 4 bytes locale = skip 8
+	textStart := dataAtom.offset + dataAtom.headerSize + 8
+	textLen := dataAtom.size - dataAtom.headerSize - 8
+	if textLen <= 0 {
+		return "", fmt.Errorf("empty lyrics")
+	}
+
+	buf := make([]byte, textLen)
+	if _, err := f.ReadAt(buf, textStart); err != nil {
+		return "", err
+	}
+
+	return string(buf), nil
 }
 
 func extractLyricsFromSidecarLRC(filePath string) (string, error) {
